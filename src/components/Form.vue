@@ -1,10 +1,14 @@
 <script setup>
-import { reactive } from 'vue';
+import { reactive, computed } from 'vue';
 import Alert from './Alert.vue'
 
 const emit = defineEmits(['update:name', 'update:owner', 'update:email', 'update:clearanceDate', 'update:symptoms', 'save-patient'])
 
 const props = defineProps({
+  id: {
+    type: [String, null],
+    required: true
+  },
   name: {
     type: String,
     required: true
@@ -50,6 +54,8 @@ const onSubmit = () => {
     })
   }, 3000)
 }
+
+const editing = computed(() => props.id)
 </script>
 
 <template>
@@ -91,7 +97,7 @@ const onSubmit = () => {
       </div>
       <input type="submit"
         class="bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-colors"
-        value="Register Patient" />
+        :value="[editing ? 'Save Patient' : 'Register Patient']" />
     </form>
   </div>
 </template>
